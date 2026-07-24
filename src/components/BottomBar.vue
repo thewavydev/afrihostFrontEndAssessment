@@ -1,5 +1,5 @@
 <template>
-  <nav class="absolute bottom-0 w-full bg-green-500 flex items-center justify-around h-20  rounded-t-3xl shadow-[0_-6px_24px_rgba(0,0,0,0.06)]">
+  <nav class="absolute bottom-0 w-full bg-[#3DA0A7] flex items-center justify-around h-20  rounded-t-3xl shadow-[0_-6px_24px_rgba(0,0,0,0.06)]">
     <button v-for="item in tabs" :key="item.name" @click="active = item.name"
       class="p-2" :class="active === item.name ? 'text-teal-400' : 'text-gray-300'">
       <component :is="item.icon" class="w-6 h-6" />
@@ -19,7 +19,6 @@
 
 <script>
 export default {
-  name: 'BottomNavBar',
   data() {
     return {
       active: 'home',
