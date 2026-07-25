@@ -13,4 +13,18 @@ export default defineConfig({
       vue: 'vue/dist/vue.esm-bundler.js',
     },
   },
+
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://www.afrihost.com',
+        changeOrigin: true,
+        rewrite: (path) =>
+          path.replace(
+            /^\/api/,
+            '/assessments/2603-fe-mid'
+          ),
+      },
+    },
+  },
 })

@@ -19,6 +19,7 @@
     <div>
       <recipes-card />
     </div>
+    <!-- <router-view /> -->
   </div>
   <bottom-bar />
 </template>
