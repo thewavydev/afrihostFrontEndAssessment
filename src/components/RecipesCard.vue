@@ -34,7 +34,7 @@
                 <button class="absolute top-6 right-8 p-2 bg-white rounded-lg shadow">
                     <Heart :size="18" />
                 </button>
-                <img :src="recipe.images[0].url" :alt="recipe.title" :type="recipe.image.mime" class="w-full h-32 object-cover rounded-xl" />
+                <img :src="recipe.images[0].url" :alt="recipe.title" :type="recipe.images.mime" class="w-full h-32 object-cover rounded-xl" />
                 <p class="mt-4 text-xl font-bold">
                     {{ recipe.title }}
                 </p>
