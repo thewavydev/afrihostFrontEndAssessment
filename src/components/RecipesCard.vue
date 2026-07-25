@@ -4,14 +4,13 @@
             <p class="text-xl font-bold">Category</p>
             <div class="flex gap-3 mt-4 overflow-x-auto pb-2">
                 <button v-for="category in categories" :key="category" @click="active = category"
-                    class="capitalize  px-6 py-3 rounded-3xl font-medium whitespace-nowrap" :class="active === category
+                    class="capitalize  px-6 py-3 rounded-3xl font-medium shadow" :class="active === category
                         ? 'bg-[#3DA0A7] text-white'
                         : 'bg-gray-100 text-gray-700'">
                     {{ category }}
                 </button>
             </div>
         </div>
-
         <div class="flex items-center justify-between mt-8 mb-4">
             <h2 class="text-2xl font-semibold">
                 Popular Recipes
@@ -20,17 +19,15 @@
                 See All
             </button>
         </div>
-
         <div v-if="recipesStore.loading" class="py-8 text-center">
             Loading recipes...
         </div>
         <div v-else-if="recipesStore.error" class="py-8 text-center text-red-500">
             {{ recipesStore.error }}
         </div>
-
         <div v-else class="flex gap-6 pb-4 overflow-x-auto md:grid md:grid-cols-4 md:overflow-visible">
             <div v-for="recipe in filteredRecipes" :key="recipe.id" @click="viewRecipe(recipe.id)"
-                class="relative flex-shrink-0 w-60 p-4 bg-white rounded-3xl shadow-xl cursor-pointer">
+                class="relative flex-shrink-0 w-60 p-4 bg-white rounded-3xl shadow cursor-pointer">
                 <button class="absolute top-6 right-8 p-2 bg-white rounded-lg shadow">
                     <Heart :size="18" />
                 </button>
@@ -68,6 +65,7 @@ export default {
     components: { Heart, Flame, Clock4, Dot },
     data() {
         return {
+            recipePreview: true,
             categories: [
                 "breakfast",
                 "lunch",

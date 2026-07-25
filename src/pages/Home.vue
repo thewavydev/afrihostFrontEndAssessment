@@ -7,7 +7,7 @@
       </div>
       <div class="w-1/2">
         <p class="text-end">
-          <ShoppingCart :size="32"/>
+          <ShoppingCart :size="32" class="text-end"/>
         </p>
       </div>
     </div>
@@ -23,14 +23,26 @@
 </template>
 
 <script>
-import { ShoppingCart  } from "@lucide/vue";
+import { ShoppingCart } from '@lucide/vue';
 export default {
-    component:{ShoppingCart},
+    components:{ShoppingCart},
     data () {
         return {
 
         }
+    },
+    computed: {
+    timeOfDay() {
+      const hour = new Date().getHours()
+      if (hour < 12) {
+        return 'Morning'
+      }
+      if (hour < 18) {
+        return 'Afternoon'
+      }
+      return 'Evening'
     }
+  }
 }
 </script>
 

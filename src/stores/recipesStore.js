@@ -12,10 +12,8 @@ export const useRecipesStore = defineStore('recipes', {
     async fetchRecipes() {
       this.loading = true
       this.error = null
-
       try {
         const response = await axios.get('/api/recipes.json')
-
         this.recipes = response.data.recipes
       } catch (error) {
         console.error('Failed to fetch recipes:', error)
