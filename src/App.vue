@@ -12,7 +12,6 @@
       </div>
     </div>
     <div class="w-full mt-10">
-      <p class="text-xl font-bold">Featured</p>
       <div>
         <featured-card />
       </div>

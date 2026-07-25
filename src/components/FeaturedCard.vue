@@ -1,19 +1,28 @@
 <template>
-    <div class="mt-4 w-full overflow-x-auto">
-        <div class="flex gap-4  pb-2">
+    <div>
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-2xl font-semibold">Featured</h2>
+            <div class="hidden md:flex gap-2">
+                <button @click="scrollLeft"
+                    class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition">
+                    <
+                </button>
+                <button @click="scrollRight"
+                    class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition">
+                    >
+                </button>
+            </div>
+        </div>
+        <div ref="cardContainer" class="flex gap-4 overflow-x-auto md:overflow-hidden scroll-smooth pb-2">
             <div v-for="(item, index) in cardDetails" :key="index"
-                class="bg-[#3DA0A7] rounded-lg h-48 w-72 sm:w-80 flex-shrink-0 flex flex-col justify-end">
-                <div class="p-4">
-                    <p class="text-xl text-white w-52">
-                        {{ item.title }}
-                    </p>
-                    <div class="mt-2 flex justify-between gap-4 text-white">
-                        <p class="">
-                            {{ item.name }}
-                        </p>
-                        <p class="">
-                            {{ item.duration }}
-                        </p>
+                class="relative rounded-lg h-48 w-72 sm:w-80 overflow-hidden flex-shrink-0">
+                <div class="absolute inset-0 bg-[url('/Food.png')] bg-cover bg-center"></div>
+                <div class="absolute inset-0 bg-[#3DA0A7]/60"></div>
+                <div class="relative z-10 h-full flex flex-col justify-end p-4 text-white">
+                    <p class="text-xl w-52">{{ item.title }}</p>
+                    <div class="mt-2 flex justify-between">
+                        <p>{{ item.name }}</p>
+                        <p>{{ item.duration }}</p>
                     </div>
                 </div>
             </div>
@@ -77,9 +86,23 @@ export default {
                     duration: '10 Min'
                 }
             ]
+        };
+    },
+
+    methods: {
+        scrollLeft() {
+            this.$refs.cardContainer.scrollBy({
+                left: -320,
+                behavior: "smooth",
+            });
+        },
+
+        scrollRight() {
+            this.$refs.cardContainer.scrollBy({
+                left: 320,
+                behavior: "smooth",
+            });
         }
     }
-}
+};
 </script>
-
-<style lang="scss" scoped></style>
