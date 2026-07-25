@@ -71,6 +71,7 @@ export default {
             categories: [
                 "breakfast",
                 "lunch",
+                "desert",
                 "dinner"
             ],
             active: "breakfast",

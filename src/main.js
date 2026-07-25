@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import router from './router'
 import App from './App.vue'
+import Home from './pages/Home.vue'
 import BottomBar from './components/BottomBar.vue'
 import FeaturedCard from './components/FeaturedCard.vue'
 import RecipesCard from './components/RecipesCard.vue'
@@ -18,4 +19,5 @@ app.component('featured-card', FeaturedCard);
 app.component('recipes-card', RecipesCard);
 app.component('recipes-overview', RecipesOverview);
 app.component('bottom-bar', BottomBar);
+app.component('home', Home)
 app.mount('#app')
