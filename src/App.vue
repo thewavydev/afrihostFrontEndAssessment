@@ -24,6 +24,9 @@
         </button>
       </div>
     </div>
+    <div>
+      <recipes-card />
+    </div>
   </div>
   <bottom-bar />
 </template>
