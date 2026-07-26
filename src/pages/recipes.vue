@@ -1,5 +1,17 @@
 <template>
-    <div class="w-full min-h-screen relative bg-cover bg-center shadow-xl"
+    <div v-if="recipesStore.loading" class="py-8 text-center">
+        Loading recipe...
+    </div>
+
+    <div v-else-if="recipesStore.error" class="py-8 text-center text-red-500">
+        {{ recipesStore.error }}
+    </div>
+
+    <div v-else-if="recipeNotFound" class="py-8 text-center text-slate-700">
+        Recipe not found.
+    </div>
+
+    <div v-else class="w-full min-h-screen relative bg-cover bg-center shadow-xl"
         :style="{ backgroundImage: `url(${recipeImage})` }">
         <!-- Header -->
         <div class="flex justify-between items-center pt-10 px-4">
@@ -27,7 +39,7 @@
             </div>
             <div class="w-full mt-4">
                 <p class="text-sm leading-6">
-                    {{ showMore ? recipe.description : recipe.description.substring(0, 150) + '...' }}
+                    <!-- {{ showMore ? recipe.description : recipe.description.substring(0, 150)}} -->
                     <span v-if="recipe.description.length > 150" @click="showMore = !showMore"
                         class="text-sm font-bold hover:underline cursor-pointer ml-1">
                         {{ showMore ? 'View Less' : 'View More' }}
@@ -139,171 +151,56 @@
 
 <script>
 import { X, Heart, Clock4, Flame, LeafyGreen } from '@lucide/vue';
+import { useRecipesStore } from '../stores/recipesStore';
+
 export default {
     components: { X, Heart, Clock4, Flame, LeafyGreen },
 
     data() {
         return {
             showMore: false,
-
             active: 'Ingredients',
-
-            recipe: {
-                id: 1,
-
-                category: 'breakfast',
-
-                title: 'Healthy Taco Salad',
-
-                description:
-                    'Fresh, vibrant, and satisfying, this healthy taco salad brings all the bold flavors you love with a nourishing twist. Crisp lettuce forms the base, topped with seasoned lean protein, juicy cherry tomatoes, crunchy peppers, and fiber-rich black beans. Creamy avocado adds healthy fats, while a sprinkle of fresh herbs and lime brightens every bite. Finished with a light, zesty dressing and a touch of spice, this salad delivers the taste of a taco without the heaviness. It’s perfectly balanced, packed with nutrients, and ideal for a wholesome lunch or an easy, guilt-free dinner.',
-
-                images: [
-                    {
-                        url: 'https://www.afrihost.com/assessments/2603-fe-mid/images/1-large.avif',
-                        width: '1024',
-                        mime: 'image/avif'
-                    },
-                    {
-                        url: 'https://www.afrihost.com/assessments/2603-fe-mid/images/1-large.jpg',
-                        width: '1024',
-                        mime: 'image/jpg'
-                    },
-                    {
-                        url: 'https://www.afrihost.com/assessments/2603-fe-mid/images/1-large.webp',
-                        width: '1024',
-                        mime: 'image/webp'
-                    }
-                ],
-
-                ingredients: [
-                    {
-                        label: 'Romaine lettuce or mixed leafy greens',
-                        quantity: 4,
-                        unit: 'cups'
-                    },
-                    {
-                        label: 'Lean ground turkey or grilled chicken breast',
-                        quantity: 250,
-                        unit: 'g'
-                    },
-                    {
-                        label: 'Low-sodium taco seasoning',
-                        quantity: 1,
-                        unit: 'tbsp'
-                    },
-                    {
-                        label: 'Cherry tomatoes',
-                        quantity: 1,
-                        unit: 'cup'
-                    },
-                    {
-                        label: 'Bell pepper',
-                        quantity: 1,
-                        unit: 'medium'
-                    },
-                    {
-                        label: 'Black beans',
-                        quantity: 1,
-                        unit: 'cup'
-                    },
-                    {
-                        label: 'Avocado',
-                        quantity: 1,
-                        unit: 'large'
-                    },
-                    {
-                        label: 'Red onion',
-                        quantity: 0.25,
-                        unit: 'cup'
-                    },
-                    {
-                        label: 'Fresh cilantro',
-                        quantity: 2,
-                        unit: 'tbsp'
-                    },
-                    {
-                        label: 'Lime juice',
-                        quantity: 1,
-                        unit: 'lime'
-                    },
-                    {
-                        label: 'Greek yogurt',
-                        quantity: 0.25,
-                        unit: 'cup'
-                    },
-                    {
-                        label: 'Olive oil',
-                        quantity: 1,
-                        unit: 'tbsp'
-                    },
-                    {
-                        label: 'Salt',
-                        quantity: 0,
-                        unit: 'to taste'
-                    },
-                    {
-                        label: 'Black pepper',
-                        quantity: 0,
-                        unit: 'to taste'
-                    }
-                ],
-
-                instructions: [
-                    'Heat the olive oil in a pan over medium heat. Add the ground turkey or chicken and cook for 6–8 minutes until browned and cooked through. Stir in the taco seasoning and a splash of water if needed. Remove from heat.',
-
-                    'Wash and chop the lettuce. Halve the cherry tomatoes, dice the bell pepper, slice the red onion, and chop the cilantro. Rinse and drain the black beans.',
-
-                    'In a small bowl, mix the Greek yogurt (or sour cream) with lime juice, salt, and black pepper until smooth.',
-
-                    'In a large bowl, layer the lettuce, cooked protein, vegetables, black beans, and avocado.',
-
-                    'Drizzle with dressing, add optional toppings, toss gently, and serve immediately.'
-                ],
-
-                meta: {
-                    cooking_time: 900,
-
-                    nutrients: [
-                        {
-                            unit: 'g',
-                            amount: 65,
-                            label: 'Carbs'
-                        },
-                        {
-                            unit: 'g',
-                            amount: 27,
-                            label: 'Proteins'
-                        },
-                        {
-                            unit: '',
-                            amount: 120,
-                            label: 'Kcal'
-                        },
-                        {
-                            unit: 'g',
-                            amount: 91,
-                            label: 'Fats'
-                        }
-                    ]
-                }
-            }
+            recipesStore: useRecipesStore()
         };
     },
 
     computed: {
+        recipeId() {
+            return Number(this.$route.params.id);
+        },
+
+        recipe() {
+            return this.recipesStore.recipes.find(recipe => recipe.id === this.recipeId) || null;
+        },
+
+        recipeNotFound() {
+            return (
+                !this.recipesStore.loading &&
+                !this.recipesStore.error &&
+                this.$route.params.id &&
+                !this.recipe &&
+                this.recipesStore.recipes.length > 0
+            );
+        },
+
         recipeImage() {
-            return this.recipe.images.find(
-                image => image.mime === 'image/avif'
-            )?.url || this.recipe.images[0]?.url;
+            return (
+                this.recipe?.images?.find(image => image.mime === 'image/avif')?.url ||
+                this.recipe?.images?.[0]?.url ||
+                ''
+            );
         },
 
         cookingTime() {
-            const seconds = this.recipe.meta.cooking_time;
-
+            const seconds = this.recipe?.meta?.cooking_time || 0;
             const minutes = Math.floor(seconds / 60);
-
             return `${minutes} Min`;
+        }
+    },
+
+    created() {
+        if (!this.recipesStore.recipes.length) {
+            this.recipesStore.fetchRecipes();
         }
     }
 };
