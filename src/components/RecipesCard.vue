@@ -3,10 +3,7 @@
         <div class="mt-10">
             <p class="text-xl font-bold">Category</p>
             <div class="flex gap-3 mt-4 overflow-x-auto pb-2">
-                <button v-for="category in categories" :key="category" @click="active = category"
-                    class="capitalize  px-6 py-3 rounded-3xl font-medium shadow" :class="active === category
-                        ? 'bg-[#3DA0A7] text-white'
-                        : 'bg-gray-100 text-gray-700'">
+                <button v-for="category in categories" :key="category" @click="active = category" class="capitalize  px-6 py-3 rounded-3xl font-medium shadow" :class="active === category ? 'bg-[#3DA0A7] text-white' : 'bg-gray-100 text-gray-700'">
                     {{ category }}
                 </button>
             </div>
@@ -15,7 +12,7 @@
             <h2 class="text-2xl font-semibold">
                 Popular Recipes
             </h2>
-            <button @click="seeAll" class="text-blue-500 font-medium hover:underline">
+            <button @click="seeAll" class="text-[#3DA0A7] font-medium hover:underline">
                 See All
             </button>
         </div>
@@ -48,7 +45,7 @@
                     <div class="flex items-center gap-2">
                         <Clock4 :size="15" />
                         <span>
-                            {{ formatCookingTime(recipe.meta.cooking_time) }}
+                            {{ (recipe.meta.cooking_time / 60).toFixed(0) }} Min
                         </span>
                     </div>
                 </div>
@@ -95,9 +92,6 @@ export default {
             const nutrient = recipe.meta.nutrients.find(item => item.label === label);
             return nutrient ? nutrient.amount : 0;
         },
-        formatCookingTime(seconds) {
-            return `${Math.round(seconds / 60)} min`;
-        }
     }
 };
 </script>

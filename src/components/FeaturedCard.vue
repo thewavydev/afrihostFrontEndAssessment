@@ -2,16 +2,9 @@
     <div>
         <div class="flex items-center justify-between mb-4">
             <h2 class="text-2xl font-semibold">Featured</h2>
-            <div class="hidden md:flex gap-2">
-                <button @click="scrollLeft"
-                    class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition">
-                    <
-                </button>
-                <button @click="scrollRight"
-                    class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition">
-                    >
-                </button>
-            </div>
+            <button class="text-[#3DA0A7] font-medium hover:underline transition" @click="$router.push('/')">
+                See All
+            </button>
         </div>
         <div ref="cardContainer" class="flex gap-4 overflow-x-auto md:overflow-hidden scroll-smooth pb-2">
             <div v-for="(item, index) in cardDetails" :key="index"
@@ -29,7 +22,6 @@
         </div>
     </div>
 </template>
-
 <script>
 export default {
     data() {

@@ -16,35 +16,19 @@
     >
       <ChefHat class="w-7 h-7" />
     </button>
-
-    <!-- Bottom Indicator -->
     <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-28 h-1.5 rounded-full bg-teal-100"/>
   </nav>
 </template>
 
 
 <script>
-import {
-  House,
-  Search,
-  Bell,
-  User,
-  ChefHat
-} from "@lucide/vue";
+import { House, Search, Bell, User, ChefHat } from "@lucide/vue";
 
 export default {
-  components: {
-    House,
-    Search,
-    Bell,
-    User,
-    ChefHat
-  },
-
+  components: { House, Search, Bell, User, ChefHat},
   data() {
     return {
       active: "/",
-
       tabs: [
         {
           name: "home",

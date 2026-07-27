@@ -19,7 +19,7 @@
                 <div class="flex items-center gap-2 shrink-0">
                     <Clock4 :size="15" />
                     <p class="text-slate-500">
-                        {{ cookingTime }}
+                        {{ (recipe.meta.cooking_time / 60).toFixed(0) }} Min
                     </p>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                             Ingredients
                         </p>
                         <p class="text-slate-500">
-                            {{ recipe.ingredients?.length }} Items
+                            {{ recipe.ingredients.length }} Items
                         </p>
                     </div>
                 <div class="mt-4">
@@ -131,24 +131,10 @@
 </template>
 
 <script>
-import {
-    X,
-    Heart,
-    Clock4,
-    Flame
-} from '@lucide/vue'
-
+import { X, Heart, Clock4, Flame } from '@lucide/vue'
 import { useRecipesStore } from '../stores/recipesStore'
-
 export default {
-
-    components: {
-        X,
-        Heart,
-        Clock4,
-        Flame
-    },
-
+    components: { X, Heart, Clock4, Flame},
     data() {
         return {
             recipesStore: useRecipesStore(),
@@ -157,67 +143,32 @@ export default {
         }
     },
     computed: {
-
         recipe() {
             return this.recipesStore.recipe
         },
-
         recipeImage() {
-
             if (!this.recipe?.images?.length) {
                 return ''
             }
-
             return (
-                this.recipe.images.find(
-                    image =>
-                        image.width === '1024' &&
-                        image.mime === 'image/avif'
-                )?.url ||
-                this.recipe.images.find(
-                    image => image.width === '1024'
-                )?.url ||
-                this.recipe.images[0]?.url
+                this.recipe.images.find(image => image.width === '1024' && image.mime === 'image/avif')?.url ||
+                this.recipe.images.find(image => image.width === '1024')?.url || this.recipe.images[0]?.url
             )
         },
-
         ingredientImage() {
-
             if (!this.recipe?.images?.length) {
                 return ''
             }
-
             return (
-                this.recipe.images.find(
-                    image =>
-                        image.width === '134' &&
-                        image.mime === 'image/avif'
-                )?.url ||
-                this.recipe.images.find(
-                    image => image.width === '134'
-                )?.url ||
+                this.recipe.images.find(image => image.width === '134' && image.mime === 'image/avif')?.url ||
+                this.recipe.images.find(image => image.width === '134')?.url ||
                 this.recipe.images[0]?.url
             )
         },
-
-        cookingTime() {
-
-            if (!this.recipe?.meta?.cooking_time) {
-                return '0 Min'
-            }
-
-            return `${Math.floor(
-                this.recipe.meta.cooking_time / 60
-            )} Min`
-        }
     },
-
     async created() {
-
         const id = this.$route.params.id
-
         await this.recipesStore.fetchRecipe(id)
-
     }
 }
 </script>
