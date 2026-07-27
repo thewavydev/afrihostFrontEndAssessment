@@ -2,8 +2,10 @@
     <div class="w-full max-w-2xl mx-auto p-4">
         <!-- Profile Header -->
         <div class="flex flex-col items-center text-center">
-            <img :src="profile.avatar" :alt="profile.name" class="w-24 h-24 rounded-full object-cover" />
-
+            <!-- <img :src="profile.avatar" :alt="profile.name" class="w-24 h-24 rounded-full object-cover" /> -->
+             <div class="rounded-full bg-slate-100 p-4">
+                 <User :size="60"/>
+             </div>
             <h2 class="mt-4 text-2xl font-bold">
                 {{ profile.name }}
             </h2>
@@ -75,15 +77,16 @@
 </template>
 
 <script>
+import {User} from '@lucide/vue'
 export default {
+    components:{User},
     data() {
         return {
             profile: {
                 name: "Lehlohonolo Mona",
                 email: "lehlohonolomona23@gmail.com",
                 location: "South Africa",
-                favouriteCuisine: "Asian",
-                avatar: "https://i.pravatar.cc/150?img=12",
+                favouriteCuisine: "Shisanyama",
                 preferences: [
                     "Healthy Meals",
                     "Quick Recipes",

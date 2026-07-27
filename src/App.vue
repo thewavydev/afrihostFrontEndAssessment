@@ -2,7 +2,7 @@
   <main class="">
       <router-view />
   </main>
-  <div class="mt-32">
+  <div v-if="$route.name !== 'recipes-overview'" class="mt-32">
     <bottom-bar />
   </div>
 </template>
@@ -11,8 +11,8 @@
 export default {
   data() {
     return {
-
+       
     }
-  },
+  }
 }
 </script>

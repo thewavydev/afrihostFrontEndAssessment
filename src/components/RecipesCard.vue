@@ -39,11 +39,11 @@
                     <div class="flex items-center gap-2">
                         <Flame :size="15" />
                         <span>
-                            {{ getNutrient(recipe, 'Carbs') }}g
+                            {{ getNutrient(recipe, 'Kcal') }}g 
                         </span>
                     </div>
 
-                    <Dot :size="25" />
+                    <Dot :size="52" />
 
                     <div class="flex items-center gap-2">
                         <Clock4 :size="15" />
